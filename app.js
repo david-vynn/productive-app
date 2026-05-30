@@ -50,3 +50,46 @@ function toggleTask(index) {
   tasks[index].done = !tasks[index].done
   renderTasks()
 }
+
+// TIMER
+let timeLeft = 25 * 60 // 25 menit dalam detik
+let timerInterval = null
+
+const timerDisplay = document.getElementById('timerDisplay')
+const startBtn = document.getElementById('startBtn')
+const pauseBtn = document.getElementById('pauseBtn')
+const resetBtn = document.getElementById('resetBtn')
+
+function updateDisplay() {
+  const minutes = Math.floor(timeLeft / 60)
+  const seconds = timeLeft % 60
+  timerDisplay.textContent = 
+    String(minutes).padStart(2, '0') + ':' + 
+    String(seconds).padStart(2, '0')
+}
+
+startBtn.addEventListener('click', function() {
+  if (timerInterval) return // cegah double start
+  timerInterval = setInterval(function() {
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval)
+      timerInterval = null
+      alert('Waktu habis! Istirahat dulu 🎉')
+      return
+    }
+    timeLeft--
+    updateDisplay()
+  }, 1000)
+})
+
+pauseBtn.addEventListener('click', function() {
+  clearInterval(timerInterval)
+  timerInterval = null
+})
+
+resetBtn.addEventListener('click', function() {
+  clearInterval(timerInterval)
+  timerInterval = null
+  timeLeft = 25 * 60
+  updateDisplay()
+})
