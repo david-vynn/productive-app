@@ -17,7 +17,7 @@ addBtn.addEventListener('click', function() {
     }
 
     // Tambah tugas ke array
-    tasks.push(taskText)
+    tasks.push({ text: taskText, done: false})
 
     // Kosongkan Input
     taskInput.value = ''
@@ -32,8 +32,8 @@ function renderTasks() {
 
   tasks.forEach(function(task, index) {
     taskList.innerHTML += `
-      <li>
-        <span>${task}</span>
+      <li class="${task.done ? 'done' : ''}">
+        <span onclick="toggleTask(${index})">${task.text}</span>
         <button onclick="deleteTask(${index})">Hapus</button>
       </li>
     `
@@ -44,4 +44,9 @@ function renderTasks() {
 function deleteTask(index) {
     tasks.splice(index, 1)
     renderTasks()
+}
+
+function toggleTask(index) {
+  tasks[index].done = !tasks[index].done
+  renderTasks()
 }
