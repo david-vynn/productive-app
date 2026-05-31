@@ -1,3 +1,19 @@
+// Gunakan event 'pagehide' karena lebih reliabel daripada 'beforeunload' di mobile/Chrome baru
+window.addEventListener('pagehide', () => {
+    sessionStorage.setItem('scrollPos', window.scrollY);
+});
+
+// Gunakan 'DOMContentLoaded' agar lebih cepat dari 'load'
+window.addEventListener('DOMContentLoaded', () => {
+    const scrollPos = sessionStorage.getItem('scrollPos');
+    if (scrollPos) {
+        // Beri sedikit delay (100ms) untuk memastikan browser sudah merender konten
+        setTimeout(() => {
+            window.scrollTo(0, parseInt(scrollPos));
+        }, 100);
+    }
+});
+
 // 1. Ambil elemen dari HTML
 const taskInput = document.getElementById('taskInput')
 const addBtn = document.getElementById('addBtn')
@@ -93,3 +109,49 @@ resetBtn.addEventListener('click', function() {
   timeLeft = 25 * 60
   updateDisplay()
 })
+
+// NOTES
+const noteTitleInput = document.getElementById('noteTitleInput')
+const noteContentInput = document.getElementById('noteContentInput')
+const saveNoteBtn = document.getElementById('saveNoteBtn')
+const noteList = document.getElementById('noteList')
+
+let note = []
+
+saveNoteBtn.addEventListener('click', function() {
+  const titleText = noteTitleInput.value
+  const contentText = noteContentInput.value
+
+  if (titleText === '' || contentText === '') {
+    alert('Judul dan isi catatan harus diisi!')
+    return
+  }
+
+  note.push({ title: titleText, content: contentText })
+
+  noteTitleInput.value = ''
+  noteContentInput.value = ''
+
+  renderNotes()
+})
+
+function renderNotes() {
+  noteList.innerHTML = ''
+
+  note.forEach(function(note, index) {
+    noteList.innerHTML += `
+      <li>
+        <div>
+          <span class="note-title">${note.title}</span>
+          <p class="note-content">${note.content}</p>
+        </div>
+        <button onclick="deleteNote(${index})">Hapus</button>
+      </li>
+    `
+  })
+}
+
+function deleteNote(index) {
+  note.splice(index, 1)
+  renderNotes()
+}
