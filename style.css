@@ -101,3 +101,68 @@ li.done span{
     text-decoration: line-through;
     color: #aaa;
 }
+
+.timer-section{
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #ececff;
+}
+
+.timer-section h2{
+    font-size:  18px;
+    color: #1a1a2e;
+    margin-bottom: 16px;
+}
+
+.timer-display{
+    font-size: 56px;
+    font-weight: 700;
+    color: #6c63ff;
+    text-align: center;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+}
+
+.timer-buttons{
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.timer-buttons button{
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+#startBtn{
+    background: #6c63ff;
+    color: white;
+}
+
+#startBtn:hover{
+    background: #574fd6;
+}
+
+#pauseBtn{
+    background: #f0f2f5;
+    color: #333;
+}
+
+#pauseBtn:hover{
+    background: #e0e0e0;
+}
+
+#resetBtn{
+    background: transparent;
+    color: #ff5e5e;
+    border: 1px solid #ff5e5e !important;
+}
+
+#resetBtn:hover{
+    background: #ff5e5e;
+    color: white;
+}
