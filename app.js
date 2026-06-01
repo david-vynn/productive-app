@@ -155,3 +155,54 @@ function deleteNote(index) {
   note.splice(index, 1)
   renderNotes()
 }
+
+// FEED
+const feedInput = document.getElementById('feedInput')
+const postBtn = document.getElementById('postBtn')
+const feedList = document.getElementById('feedList')
+
+let posts = []
+
+postBtn.addEventListener('click', function() {
+  const postText = feedInput.value
+
+  if (postText === '') {
+    alert('Tulis progressmu dulu!')
+    return
+  }
+
+  posts.push({ text: postText, likes: 0 })
+
+  feedInput.value = ''
+
+  renderFeed()
+})
+
+function renderFeed() {
+  feedList.innerHTML = ''
+
+  posts.forEach(function(post, index) {
+    feedList.innerHTML += `
+      <div class="post-card">
+        <div class="post-avatar">D</div>
+        <div class="post-body">
+          <p class="post-text">${post.text}</p>
+          <div class="post-actions">
+            <button onclick="likePost(${index})">♥ ${post.likes}</button>
+            <button onclick="deletePost(${index})">Hapus</button>
+          </div>
+        </div>
+      </div>
+    `
+  })
+}
+
+function likePost(index) {
+  posts[index].likes++
+  renderFeed()
+}
+
+function deletePost(index) {
+  posts.splice(index, 1)
+  renderFeed()
+}
